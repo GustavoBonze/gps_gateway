@@ -21,7 +21,6 @@ const server = net
         connection.on("data", (data) => {
             device(data, connection);
         });
-        // SE A CONEXÃO CAIR, É REMOVIDO DA LISTA DE RASTREADORES ONLINE
         connection.on("end", () => {
             Device.removeDevice(connection);
             console.log("device disconnected");
@@ -41,5 +40,4 @@ server.on("error", (err) => {
     throw err;
 });
 
-// DE TANTO EM TANTO TEMPO, ENTRA NO BANCO E BUSCA OS COMANDOS A SEREM ENVIADOS PARA O RASTREADOR
-// setInterval(() => Device.commandsDbToDevice(), 5000);
+setInterval(() => Device.commandsDbToDevice(), 60000);

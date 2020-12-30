@@ -2,7 +2,7 @@ const dynamoose = require("dynamoose");
 
 const SendCommandSchema = new dynamoose.Schema({
     id: String,
-    data: { type: String },
+    data: String,
     trackerModel: String,
     date: Date,
     uid: String,

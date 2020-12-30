@@ -35,7 +35,7 @@ exports.device = async (data, connection) => {
             start: str[0],
             device_id: str[1],
             cmd: str[2],
-        };
+        }
         commandHandlingE3(parts.cmd, trackerModel, data, connection, convertedData);
     }
 
