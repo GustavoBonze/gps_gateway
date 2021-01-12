@@ -35,12 +35,10 @@ exports.device = async (data, connection) => {
             start: str[0],
             device_id: str[1],
             cmd: str[2],
-        }
+        };
         commandHandlingE3(parts.cmd, trackerModel, data, connection, convertedData);
     }
-
-    //ACRESCENTA O RASTREADOR NA LISTA DE RASTREADORES ONLINE
-    Device.addDeviceToList(parts.device_id, connection);
+    return parts.device_id;
 };
 
 //E3 ASCII

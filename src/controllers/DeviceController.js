@@ -1,7 +1,7 @@
 const command = require("./CommandController");
 const devices = [];
 
-var sendToDevice = exports.sendToDevice = (data, connection) => connection.write(new Buffer.from(data, "hex"));
+exports.sendToDevice = (data, connection) => connection.write(new Buffer.from(data, "hex"));
 
 // REMOVE RASTREADOR DA LISTA DE ONLINE
 exports.removeDevice = (connection) => devices.splice(devices.indexOf(connection), 1);
@@ -9,21 +9,26 @@ exports.removeDevice = (connection) => devices.splice(devices.indexOf(connection
 // PROCURA O RASTREADOR ONLINE, SE TIVER ONLINE O COMANDO É ENVIADO
 exports.commandsDbToDevice = async () => {
     const commands = await command.findAllCmdDb();
-
     commands.forEach((cmd) => {
-        const deviceConnection = findDevice(cmd.uid);
-        deviceConnection ? sendToDevice(cmd.data, deviceConnection) : console.log("device", cmd.uid, "is offline");
+        const deviceConnection = findDevice(cmd.deviceId);
+        deviceConnection
+            ? this.sendToDevice(cmd.data, deviceConnection) + console.log(cmd.data, "enviado para: ", cmd.deviceId)
+            : console.log("device", cmd.deviceId, "is offline");
     });
 };
 
 //ACRESCENTA O RASTREADOR NA LISTA DE RASTREADORES ONLINE
-exports.addDeviceToList = (uid, connection) => {
-    const Devices = { uid, connection };
+exports.addDeviceToList = (deviceId, connection) => {
+    const Devices = { deviceId, connection };
     devices.push(Devices);
+    console.log(deviceId, "inserido no array");
+    console.log(devices.length);
 };
 
 // PROCURA RASTREADOR ONLINE
 findDevice = (deviceId) => {
-    const dev = devices.find((device) => device.uid == deviceId);
+    const dev = devices.find((device) => device.deviceId == deviceId);
     return dev ? dev.connection : false;
 };
+
+setInterval(() => console.log(devices.length), 10000);

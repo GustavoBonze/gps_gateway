@@ -17,10 +17,14 @@ AWS.config.update(awsConfig);
 // ABRE CONEXÃO TCP/IP
 const server = net
     .createServer((connection) => {
+        let deviceId = "";
         // RECEBE DADOS TCP/IP
-        connection.on("data", (data) => {
-            device(data, connection);
+        connection.on("data", async (data) => {
+            deviceId = await device(data, connection);
         });
+
+        setTimeout(() => Device.addDeviceToList(deviceId, connection), 1);
+
         connection.on("end", () => {
             Device.removeDevice(connection);
             console.log("device disconnected");
@@ -37,7 +41,7 @@ const server = net
 
 // EXIBE OS ERROS DE CONEXÃO E MATA A APLICAÇÃO
 server.on("error", (err) => {
+    console.log("Entrou nesse erro");
     throw err;
 });
-
-setInterval(() => Device.commandsDbToDevice(), 60000);
+setInterval(() => Device.commandsDbToDevice(), 15000);
