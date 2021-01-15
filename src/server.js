@@ -1,16 +1,16 @@
+require("dotenv").config();
 const net = require("net");
 const { device } = require("./device");
 const port = require("./config/index");
 const Device = require("./controllers/DeviceController");
 const AWS = require("aws-sdk");
 
-//Vai entrar no .env
 // CONEXÃO COM DYNAMO
 let awsConfig = {
-    region: "us-east-1",
-    endpoint: "https://dynamodb.us-east-1.amazonaws.com",
-    accessKeyId: "AKIAQ6OTRVTETRSRQ5ES",
-    secretAccessKey: "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",
+    region: process.env.REGION,
+    endpoint: process.env.ENDPOINT,
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
 };
 AWS.config.update(awsConfig);
 

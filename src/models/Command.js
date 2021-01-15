@@ -9,5 +9,3 @@ const SendCommandSchema = new dynamoose.Schema({
 });
 
 module.exports = dynamoose.model("SendCommand", SendCommandSchema);
-
-// *ET,354522180006087,CX#
