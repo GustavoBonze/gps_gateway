@@ -22,7 +22,6 @@ exports.addDeviceToList = (deviceId, connection) => {
     const Devices = { deviceId, connection };
     devices.push(Devices);
     console.log(deviceId, "inserido no array");
-    console.log(devices.length);
 };
 
 // PROCURA RASTREADOR ONLINE
@@ -31,4 +30,4 @@ findDevice = (deviceId) => {
     return dev ? dev.connection : false;
 };
 
-setInterval(() => console.log(devices.length), 10000);
+// setInterval(() => console.log(devices.length), 10000);
