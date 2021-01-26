@@ -3,14 +3,15 @@ const Device = require("./controllers/DeviceController");
 
 // RESPONDENDO OS COMANDOS DO E3
 commandHandlingE3 = (cmd, trackerModel, data, connection, convertedData) => {
-    const Commands = {
-        RG: Device.sendToDevice(data, connection),
-        TX: Device.sendToDevice(data, connection),
-        MQ: Device.sendToDevice(data, connection),
-        default: Package.saveRaw(convertedData, trackerModel, cmd),
-    };
-    console.log(Commands[cmd]);
-    return Commands[cmd] || Commands.default;
+    switch (cmd) {
+        case "RG":
+        case "TX":
+        case "MQ":
+            Device.sendToDevice(data, connection);
+            break;
+        default:
+            Package.saveRaw(convertedData, trackerModel, cmd);
+    }
 };
 
 // PEGANDO MODELO DO EQUIPAMENTO
