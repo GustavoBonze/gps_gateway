@@ -20,8 +20,8 @@ exports.commandsDbToDevice = async () => {
 //ACRESCENTA O RASTREADOR NA LISTA DE RASTREADORES ONLINE
 exports.addDeviceToList = (deviceId, connection) => {
     const Devices = { deviceId, connection };
-    devices.push(Devices);
-    console.log(deviceId, "inserido no array");
+    objIndex = devices.findIndex((device) => device.deviceId == deviceId);
+    devices[objIndex]?.connection ? (devices[objIndex].connection = connection) : devices.push(Devices);
 };
 
 // PROCURA RASTREADOR ONLINE
@@ -30,4 +30,4 @@ findDevice = (deviceId) => {
     return dev ? dev.connection : false;
 };
 
-// setInterval(() => console.log(devices.length), 10000);
+// setInterval(() => , 5000);

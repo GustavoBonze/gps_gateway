@@ -36,7 +36,6 @@ const server = net
     .listen(port);
 
 server.on("error", (err) => {
-    console.log("Entrou nesse erro");
     throw err;
 });
 setInterval(() => Device.commandsDbToDevice(), 15000);

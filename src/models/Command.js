@@ -5,7 +5,13 @@ const SendCommandSchema = new dynamoose.Schema({
     data: String,
     trackerModel: String,
     date: Date,
-    deviceId: String,
+    deviceId: {
+        type: String,
+        index: {
+            global: true,
+            name: "deviceIdIndex",
+        },
+    },
 });
 
 module.exports = dynamoose.model("SendCommand", SendCommandSchema);
