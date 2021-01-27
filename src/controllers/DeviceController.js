@@ -29,5 +29,3 @@ findDevice = (deviceId) => {
     const dev = devices.find((device) => device.deviceId == deviceId);
     return dev ? dev.connection : false;
 };
-
-// setInterval(() => , 5000);
