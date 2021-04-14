@@ -4,6 +4,7 @@ const { device } = require("./device");
 const port = require("./config/index");
 const Device = require("./controllers/DeviceController");
 const AWS = require("aws-sdk");
+const writeLog = require("../src/helpers/writeLog");
 
 let awsConfig = {
     region: process.env.REGION,
@@ -23,19 +24,22 @@ const server = net
         setTimeout(() => Device.addDeviceToList(deviceId, connection), 100);
 
         connection.on("end", () => {
+            const device = Device.findDeviceByConnection(connection);
+            writeLog.writeLog(device, `disconnected`);
             Device.removeDevice(connection);
-            console.log("device disconnected");
         });
+
         connection.setTimeout(360000);
         connection.on("timeout", () => {
+            const device = Device.findDeviceByConnection(connection);
+            writeLog.writeLog(device, `timeout`);
             connection.destroy();
             Device.removeDevice(connection);
-            console.log("device timeout");
         });
     })
     .listen(port);
 
 server.on("error", (err) => {
-    throw err;
+    console.log(err);
 });
 setInterval(() => Device.commandsDbToDevice(), 15000);

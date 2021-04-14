@@ -1,5 +1,5 @@
-date = new Date();
-const utc_offset = date.getTimezoneOffset();
-date.setMinutes(date.getMinutes() - utc_offset);
+const moment = require("moment");
 
-module.exports = date;
+exports.date = () => moment().format("YYYY-MM-D");
+exports.dateTime = () => moment().format("YYYY-MM-D HH:mm:ss");
+exports.toDate = () => moment().toDate();

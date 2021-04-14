@@ -30,7 +30,6 @@ exports.device = async (data, connection) => {
     let convertedData = data.toString();
     const trackerModel = await recognizeModel(convertedData.substr(0, 2));
     let parts = {};
-
     if (trackerModel == "E3") {
         const str = convertedData.split(",");
         parts = {
@@ -40,5 +39,6 @@ exports.device = async (data, connection) => {
         };
         commandHandlingE3(parts.cmd, trackerModel, data, connection, convertedData);
     }
+    Package.writeLog(parts.device_id, convertedData);
     return parts.device_id;
 };

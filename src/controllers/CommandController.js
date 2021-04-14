@@ -1,9 +1,10 @@
 const Command = require("../models/Command");
-const date = require("../helpers/date");
+const handleDate = require("../helpers/date");
 const { v4: uuidv4 } = require("uuid");
 
 exports.sendCmdDb = async (data, trackerModel, deviceId) => {
     try {
+        const date = handleDate.toDate();
         const id = uuidv4();
         Command.create({ id, date, data, trackerModel, deviceId });
     } catch (e) {

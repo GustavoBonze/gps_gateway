@@ -1,5 +1,6 @@
 const command = require("./CommandController");
 const devices = [];
+const writeLog = require("../helpers/writeLog");
 
 exports.sendToDevice = (data, connection) => connection.write(new Buffer.from(data, "hex"));
 
@@ -12,7 +13,9 @@ exports.commandsDbToDevice = async () => {
     commands.forEach((cmd) => {
         const deviceConnection = findDevice(cmd.deviceId);
         deviceConnection
-            ? this.sendToDevice(cmd.data, deviceConnection) + console.log(cmd.data, "enviado para: ", cmd.deviceId)
+            ? this.sendToDevice(cmd.data, deviceConnection) +
+              console.log(cmd.data, "enviado para: ", cmd.deviceId) +
+              writeLog.writeLog(cmd.deviceId, cmd.data)
             : console.log("device", cmd.deviceId, "is offline");
     });
 };
@@ -24,8 +27,14 @@ exports.addDeviceToList = (deviceId, connection) => {
     devices[objIndex]?.connection ? (devices[objIndex].connection = connection) : devices.push(Devices);
 };
 
-// PROCURA RASTREADOR ONLINE
+// PROCURA RASTREADOR ONLINE PELO IMEI
 findDevice = (deviceId) => {
     const dev = devices.find((device) => device.deviceId == deviceId);
     return dev ? dev.connection : false;
+};
+
+// PROCURA RASTREADOR ONLINE PELA CONEXÃO
+exports.findDeviceByConnection = (connection) => {
+    const dev = devices.find((device) => device.connection == connection);
+    return dev ? dev.deviceId : false;
 };
