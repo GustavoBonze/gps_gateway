@@ -1,4 +1,4 @@
-const Package = require("./controllers/packageController");
+const Package = require("./controllers/PackageController");
 const Device = require("./controllers/DeviceController");
 
 // RESPONDENDO OS COMANDOS DO E3

@@ -42,4 +42,6 @@ const server = net
 server.on("error", (err) => {
     console.log(err);
 });
+console.log("🚀 Server started");
+
 setInterval(() => Device.commandsDbToDevice(), 15000);
