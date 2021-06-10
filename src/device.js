@@ -39,6 +39,6 @@ exports.device = async (data, connection) => {
         };
         commandHandlingE3(parts.cmd, trackerModel, data, connection, convertedData);
     }
-    // Package.writeLog(parts.device_id, convertedData);
+    Package.writeLog(parts.device_id, convertedData);
     return parts.device_id;
 };

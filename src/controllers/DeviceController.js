@@ -1,6 +1,6 @@
 const command = require("./CommandController");
 const devices = [];
-// const writeLog = require("../helpers/writeLog");
+const writeLog = require("../helpers/writeLog");
 
 exports.sendToDevice = (data, connection) => connection.write(new Buffer.from(data, "hex"));
 
@@ -14,8 +14,8 @@ exports.commandsDbToDevice = async () => {
         const deviceConnection = findDevice(cmd.deviceId);
         deviceConnection
             ? this.sendToDevice(cmd.data, deviceConnection) + console.log(cmd.data, "enviado para: ", cmd.deviceId)
-            : //   + writeLog.writeLog(cmd.deviceId, cmd.data)
-              console.log("device", cmd.deviceId, "is offline");
+            : +writeLog.writeLog(cmd.deviceId, cmd.data);
+        console.log("device", cmd.deviceId, "is offline");
     });
 };
 
