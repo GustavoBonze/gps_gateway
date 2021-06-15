@@ -42,6 +42,6 @@ const server = net
 server.on("error", (err) => {
     console.log(err);
 });
-console.log("🚀 Server started");
+console.log(`🚀 Server started! port: ${port.port}`);
 
 setInterval(() => Device.commandsDbToDevice(), 15000);
