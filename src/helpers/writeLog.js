@@ -13,5 +13,9 @@ const handleDate = require("./date");
 //     );
 // };
 exports.writeLog = (device_id, data) => {
-    console.log(`${handleDate.dateTime()}: ${data}\n`);
+    if (device_id) {
+        console.log(`${device_id} ${handleDate.dateTime()}: ${data}\n`);
+    } else {
+        console.log(`${handleDate.dateTime()}: ${data}\n`);
+    }
 };
