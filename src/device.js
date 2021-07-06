@@ -7,6 +7,7 @@ commandHandlingE3 = (cmd, trackerModel, data, connection, convertedData) => {
         case "RG":
         case "TX":
         case "MQ":
+        case "JZ":
             Device.sendToDevice(data, connection);
             break;
         default:

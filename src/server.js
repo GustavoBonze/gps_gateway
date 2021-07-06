@@ -25,14 +25,14 @@ const server = net
 
         connection.on("end", () => {
             const device = Device.findDeviceByConnection(connection);
-            writeLog.writeLog(device, `disconnected`);
+            writeLog.writeLog(`device:`, device, `disconnected`);
             Device.removeDevice(connection);
         });
 
         connection.setTimeout(360000);
         connection.on("timeout", () => {
             const device = Device.findDeviceByConnection(connection);
-            writeLog.writeLog(device, `timeout`);
+            writeLog.writeLog(`device:`, device, `timeout`);
             connection.destroy();
             Device.removeDevice(connection);
         });
