@@ -21,7 +21,7 @@ const server = net
             deviceId = await device(data, connection);
         });
 
-        setTimeout(() => Device.addDeviceToList(deviceId, connection), 100);
+        setTimeout(() => Device.addDeviceToList(deviceId, connection), 1000);
 
         connection.on("end", () => {
             const device = Device.findDeviceByConnection(connection);
