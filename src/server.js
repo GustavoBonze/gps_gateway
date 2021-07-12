@@ -18,6 +18,7 @@ const server = net
     .createServer((connection) => {
         let deviceId = "";
         connection.on("data", async (data) => {
+            console.log(data);
             deviceId = await device(data, connection);
         });
 
