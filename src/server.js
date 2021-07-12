@@ -18,13 +18,13 @@ const server = net
     .createServer((connection) => {
         let deviceId = "";
         connection.on("data", async (data) => {
-            console.log(data);
             deviceId = await device(data, connection);
         });
 
         setTimeout(() => Device.addDeviceToList(deviceId, connection), 1000);
 
         connection.on("end", () => {
+            console.log("end", connection.remoteAddress);
             const device = Device.findDeviceByConnection(connection);
             writeLog.writeLog(`device: ${device}`, `disconnected`);
             Device.removeDevice(connection);
