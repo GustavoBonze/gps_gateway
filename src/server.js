@@ -1,7 +1,7 @@
 require("dotenv").config();
 const net = require("net");
 const { device } = require("./device");
-const port = require("./config/index");
+const { port, portHealthcheck } = require("./config/index");
 const Device = require("./controllers/DeviceController");
 const AWS = require("aws-sdk");
 const writeLog = require("../src/helpers/writeLog");
@@ -20,7 +20,6 @@ const server = net
         connection.on("data", async (data) => {
             deviceId = await device(data, connection);
         });
-
         setTimeout(() => Device.addDeviceToList(deviceId, connection), 1000);
 
         connection.on("end", () => {
@@ -43,6 +42,9 @@ const server = net
 server.on("error", (err) => {
     console.log(err);
 });
-console.log(`🚀 Server started! port: ${port.port}`);
+console.log(`🚀 Server started! port: ${port} HealthCheck port: ${portHealthcheck}`);
+
+const healthcheck = net.createServer();
+healthcheck.listen(portHealthcheck);
 
 setInterval(() => Device.commandsDbToDevice(), 15000);
